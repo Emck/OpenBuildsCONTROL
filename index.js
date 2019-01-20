@@ -42,6 +42,7 @@ io.attach(httpsserver);
 const grblStrings = require("./grblStrings.js");
 const serialport = require('serialport');
 var SerialPort = serialport;
+const Readline = SerialPort.parsers.Readline;
 var md5 = require('md5');
 var ip = require("ip");
 var _ = require('lodash');
@@ -727,9 +728,10 @@ io.on("connection", function(socket) {
       console.log("Connecting via " + data[0] + " to " + data[1] + " at baud " + data[2]);
 
       port = new SerialPort(data[1], {
-        parser: serialport.parsers.readline('\n'),
         baudRate: parseInt(data[2])
       });
+
+      parser = port.pipe(new Readline({delimiter: '\r\n'}));
 
       port.on("error", function(err) {
         if (err.message != "Port is not open") {
@@ -758,7 +760,7 @@ io.on("connection", function(socket) {
 
       });
       port.on("open", function() {
-        console.log("PORT INFO: Connected to " + port.path + " at " + port.options.baudRate);
+        console.log("PORT INFO: Connected to " + port.path + " at " + port.baudRate);
         var output = {
           'command': 'connect',
           'response': "PORT INFO: Port is now open: " + port.path + " - Attempting to detect Firmware"
@@ -830,7 +832,7 @@ io.on("connection", function(socket) {
 
         status.comms.connectionStatus = 2;
         status.comms.interfaces.activePort = port.path;
-        status.comms.interfaces.activeBaud = port.options.baudRate;
+        status.comms.interfaces.activeBaud = port.baudRate;
       }); // end port .onopen
 
       port.on("close", function() { // open errors will be emitted as an error event
@@ -842,7 +844,7 @@ io.on("connection", function(socket) {
         io.sockets.emit('data', output);
       }); // end port.onclose
 
-      port.on("data", function(data) {
+      parser.on("data", function(data) {
         var command = sentBuffer[0];
 
         // Grbl $I parser
