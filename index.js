@@ -1794,7 +1794,8 @@ function stopPort() {
   status.machine.firmware.buffer = "";
   gcodeQueue.length = 0;
   sentBuffer.length = 0; // dump bufferSizes
-  port.drain(port.close());
+  if (typeof(port)!='undefined')
+    port.drain(port.close());
 }
 
 function parseFeedback(data) {
@@ -2186,30 +2187,32 @@ function isElectron() {
 }
 
 if (isElectron()) {
-  const shouldQuit = electronApp.makeSingleInstance((commandLine, workingDirectory) => {
-    // Someone tried to run a second instance, we should focus our window.
-    if (jogWindow === null) {
-      createJogWindow();
-      jogWindow.show()
-      jogWindow.setAlwaysOnTop(true);
-      jogWindow.focus();
-      jogWindow.setAlwaysOnTop(false);
-    } else {
-      jogWindow.show()
-      jogWindow.setAlwaysOnTop(true);
-      jogWindow.focus();
-      jogWindow.setAlwaysOnTop(false);
-    }
-    // console.log('SingleInstance')
-    // console.log(commandLine)
-    var openFilePath = commandLine[1];
-    if (openFilePath !== "") {
-      // console.log(openFilePath);
-      readFile(openFilePath);
-    }
+  const shouldQuit = electronApp.requestSingleInstanceLock();
+  electronApp.on('second-instance', function (event, commandLine, workingDirectory) {
+    console.log("second-instance...");
+    // // Someone tried to run a second instance, we should focus our window.
+    // if (jogWindow === null) {
+    //   createJogWindow();
+    //   jogWindow.show()
+    //   jogWindow.setAlwaysOnTop(true);
+    //   jogWindow.focus();
+    //   jogWindow.setAlwaysOnTop(false);
+    // } else {
+    //   jogWindow.show()
+    //   jogWindow.setAlwaysOnTop(true);
+    //   jogWindow.focus();
+    //   jogWindow.setAlwaysOnTop(false);
+    // }
+    // // console.log('SingleInstance')
+    // // console.log(commandLine)
+    // var openFilePath = commandLine[1];
+    // if (openFilePath !== "") {
+    //   // console.log(openFilePath);
+    //   readFile(openFilePath);
+    // }
   });
 
-  if (shouldQuit) {
+  if (!shouldQuit) {
     console.log("Already running! Check the System Tray")
     electronApp.exit(0);
     electronApp.quit();
@@ -2403,6 +2406,7 @@ if (isElectron()) {
 
     electronApp.on('before-quit', function() {
       forceQuit = true;
+      stopPort();
     })
 
     electronApp.on('will-quit', function(event) {
