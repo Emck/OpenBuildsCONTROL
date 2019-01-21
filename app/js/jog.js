@@ -85,6 +85,11 @@ $(document).ready(function() {
     }
   });
 
+  $('#stepsize').on('input', function(ev) {
+    jogdist = $("#stepsize").val();
+    $('.jogdist').removeClass('fg-grayBlue')
+    $('.jogdist').addClass('fg-gray')
+  })
 
   $('#dist01').on('click', function(ev) {
     jogdist = 0.1;
@@ -92,6 +97,7 @@ $(document).ready(function() {
     $('.jogdist').addClass('fg-gray')
     $('#dist01label').removeClass('fg-gray')
     $('#dist01label').addClass('fg-grayBlue')
+    $("#stepsize").val(jogdist);
   })
 
   $('#dist1').on('click', function(ev) {
@@ -100,6 +106,7 @@ $(document).ready(function() {
     $('.jogdist').addClass('fg-gray')
     $('#dist1label').removeClass('fg-gray')
     $('#dist1label').addClass('fg-grayBlue')
+    $("#stepsize").val(jogdist);    
   })
 
   $('#dist10').on('click', function(ev) {
@@ -108,6 +115,7 @@ $(document).ready(function() {
     $('.jogdist').addClass('fg-gray')
     $('#dist10label').removeClass('fg-gray')
     $('#dist10label').addClass('fg-grayBlue')
+    $("#stepsize").val(jogdist);
   })
 
   $('#dist100').on('click', function(ev) {
@@ -116,6 +124,7 @@ $(document).ready(function() {
     $('.jogdist').addClass('fg-gray')
     $('#dist100label').removeClass('fg-gray')
     $('#dist100label').addClass('fg-grayBlue')
+    $("#stepsize").val(jogdist);
   })
 
   $('#dist500').on('click', function(ev) {
@@ -124,6 +133,7 @@ $(document).ready(function() {
     $('.jogdist').addClass('fg-gray')
     $('#dist500label').removeClass('fg-gray')
     $('#dist500label').addClass('fg-grayBlue')
+    $("#stepsize").val(jogdist);
   })
 
   $('#gotozeroWPos').on('click', function(ev) {
