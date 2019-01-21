@@ -211,7 +211,7 @@ if (isElectron()) {
 if (isElectron()) {
   var uploadsDir = electronApp.getPath('userData') + '/upload/';
 } else {
-  var uploadsDir = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preferences' : '/var/local')
+  var uploadsDir = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Preferences' : '/var/local')
 }
 var uploadedgcode = ""; // var to store uploaded gcode
 
@@ -2344,8 +2344,8 @@ if (isElectron()) {
       // Create the browser window.
       jogWindow = new BrowserWindow({
         // 1366 * 768 == minimum to cater for
-        width: 850,
-        height: 850,
+        width: 1366,
+        height: 1000,
         fullscreen: false,
         center: true,
         resizable: true,

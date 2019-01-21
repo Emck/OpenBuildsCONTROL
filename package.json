@@ -28,9 +28,9 @@
   "main": "index.js",
   "scripts": {
     "start": "echo \"Please run 'npm run dist' to create a local installer\" ",
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "nodemon index.js",
     "testapp": "electron .",
-    "install": "electron-rebuild",
+    "no-install": "electron-rebuild",
     "dist": "build --ia32",
     "distpi": "build --linux deb --armv7l"
   },
