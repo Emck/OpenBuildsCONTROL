@@ -40,6 +40,10 @@ const httpserver = http.listen(config.webPort, '0.0.0.0', function() {
 io.attach(httpserver);
 io.attach(httpsserver);
 
+// Add My Custom Extend 
+const server = require('./extend/server');
+server(app,express);  // run extend service
+
 const grblStrings = require("./grblStrings.js");
 const serialport = require('serialport');
 var SerialPort = serialport;

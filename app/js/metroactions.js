@@ -30,6 +30,7 @@ function manualcontrolPanel() {
   $('#manualControlPanel').show()
   $('#grblPanel').hide()
   $('#updatePanel').hide()
+  $('#makeToolsPanel').hide()
   $('#troubleshootingPanel').hide()
 }
 
@@ -38,6 +39,7 @@ function grblPanel() {
   $('#manualControlPanel').hide()
   $('#grblPanel').show()
   $('#updatePanel').hide()
+  $('#makeToolsPanel').hide()
   $('#troubleshootingPanel').hide()
 }
 
@@ -45,6 +47,15 @@ function updatePanel() {
   $('#manualControlPanel').hide()
   $('#grblPanel').hide()
   $('#updatePanel').show()
+  $('#makeToolsPanel').hide()
+  $('#troubleshootingPanel').hide()
+}
+
+function makeToolsPanel() {
+  $('#manualControlPanel').hide()
+  $('#grblPanel').hide()
+  $('#updatePanel').hide()
+  $('#makeToolsPanel').show()
   $('#troubleshootingPanel').hide()
 }
 
@@ -52,5 +63,6 @@ function troubleshootingPanel() {
   $('#manualControlPanel').hide()
   $('#grblPanel').hide()
   $('#updatePanel').hide()
+  $('#makeToolsPanel').hide()	
   $('#troubleshootingPanel').show()
 }

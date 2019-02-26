@@ -38,6 +38,7 @@
       <nav data-role="ribbonmenu" class="mt-1">
         <ul class="tabs-holder">
           <li><a id="controlTab" href="#section-two" onclick="manualcontrolPanel();"><i class="fas fa-fw fa-play"></i> Control</a></li>
+          <li><a id="makeTab" href="#section-maketools" onclick="makeToolsPanel();"><i class="fas fa-fw fa-file-medical-alt"></i> Maker Tools</a></li>
           <li id="grblSettings" style="display: none;"><a id="grblTab" href="#section-grbl" onclick="grblPanel();"><i class="fas fa-fw fa-sliders-h"></i> Grbl Settings</a></li>
           <li><a href="#section-troubleshooting" onclick="troubleshootingPanel();"><i class="fas fa-fw fa-file-medical-alt"></i> Troubleshooting</a></li>
         </ul>
@@ -298,6 +299,8 @@
               <span class="title">Visit</span>
             </div>
           </div>
+		  
+          <div class="section" id="section-maketools"></div>
 
           <div class="section" id="section-troubleshooting">
             <div class="group" style="width: 100px;">
@@ -690,6 +693,9 @@
       <div id="updatePanel" style="display: none;">
         <div id="updateconsole">Click "Download Updates" above</div>
       </div>
+      <div id="makeToolsPanel" style="display: none;">
+           <iframe src="maketools.html" width="100%" height="100%" scrolling="yes"></iframe>
+      </div>	  
       <div id="troubleshootingPanel" style="display: none;">
         <div class="grid p-0 m-0">
           <div class="row  p-0 m-0">
