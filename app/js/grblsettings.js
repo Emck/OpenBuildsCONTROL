@@ -50,7 +50,7 @@ function grblSettings(data) {
   // $('#grblFirmwareBtn').removeAttr('disabled');
   $('#grblSettings').show()
 
-  if (grblParams['$21'] == 1 && grblParams['$22'] == 1) {
+  if (grblParams['$22'] == 1) {
     $('#gotozeroMPos').removeClass('disabled')
     $('#homeBtn').attr('disabled', false)
     $('#gotoXzeroMpos').removeClass('disabled')
@@ -82,6 +82,8 @@ function grblPopulate() {
                 <div class="cell-8">
                 <a style="width: 100%;" class="button dropdown-toggle bd-openbuilds secondary outline" id="context_toggle2"><img src="img/mch/sphinx55.png"/> Select Machine</a>
                 <ul class="d-menu border bd-gray" data-role="dropdown" data-toggle-element="#context_toggle2">
+                  <li onclick="selectMachine('custom');"><a href="#"><img src="img/mch/custom.png"/>  Custom Machine</a></li>
+                  <li class="divider"></li>
                   <li onclick="selectMachine('acro55');"><a href="#"><img src="img/mch/acro55.png"/>  OpenBuilds Acro 55</a></li>
                   <li onclick="selectMachine('acro510');"><a href="#"><img src="img/mch/acro510.png"/>  OpenBuilds Acro 510</a></li>
                   <li onclick="selectMachine('acro1010');"><a href="#"><img src="img/mch/acro1010.png"/>  OpenBuilds Acro 1010</a></li>
@@ -503,4 +505,97 @@ function displayDirInvert() {
   $('#ydirinvert:checkbox').prop('checked', dir.y);
   $('#zdirinvert:checkbox').prop('checked', dir.z);
   checkifchanged();
+}
+
+// <div class="ribbon-group">
+//   <button class="ribbon-icon-button" onclick="sendGcode('$RST=$'); refreshGrblSettings()">
+//     <span class="icon">
+//       <i class="fas fa-sliders-h"></i>
+//     </span>
+//     <span class="caption">Reset&nbsp;Settings</span>
+//   </button><br>
+//   <button class="ribbon-icon-button" onclick="sendGcode('$RST=#'); refreshGrblSettings()">
+//     <span class="icon">
+//       <i class="fas fa-layer-group"></i>
+//     </span>
+//     <span class="caption">Reset&nbsp;WCOs</span>
+//   </button><br>
+//   <button class="ribbon-icon-button" onclick="sendGcode('$RST=*'); refreshGrblSettings()">
+//     <span class="icon">
+//       <i class="fas fa-microchip"></i>
+//     </span>
+//     <span class="caption">Reset&nbsp;EEPROM</span>
+//   </button>
+// </div>
+
+clearWCO
+clearSettings
+
+function clearSettings() {
+  Metro.dialog.create({
+    title: "Are you sure?",
+    content: "<div>Resetting the Grbl Settings will restore all the settings to factory defaults, but will keep other EEPROM settings intact. Would you like to continue?</div>",
+    actions: [{
+        caption: "Yes",
+        cls: "js-dialog-close secondary",
+        onclick: function() {
+          sendGcode('$RST=$');
+          refreshGrblSettings()
+        }
+      },
+      {
+        caption: "Cancel",
+        cls: "js-dialog-close",
+        onclick: function() {
+          refreshGrblSettings();
+        }
+      }
+    ]
+  });
+}
+
+function clearWCO() {
+  Metro.dialog.create({
+    title: "Are you sure?",
+    content: "<div>Resetting the Work Coordinate Systems will erase all the coordinate system offsets currently stored in the EEPROM on the controller. Would you like to continue?</div>",
+    actions: [{
+        caption: "Yes",
+        cls: "js-dialog-close secondary",
+        onclick: function() {
+          sendGcode('$RST=#');
+          refreshGrblSettings()
+        }
+      },
+      {
+        caption: "Cancel",
+        cls: "js-dialog-close",
+        onclick: function() {
+          refreshGrblSettings();
+        }
+      }
+    ]
+  });
+}
+
+function clearEEPROM() {
+  Metro.dialog.create({
+    title: "Are you sure?",
+    content: "<div>Resetting the EEPROM will erase all the Grbl Firmware settings from your controller, effectively resetting it back to factory defaults. Would you like to continue?</div>",
+    actions: [{
+        caption: "Yes",
+        cls: "js-dialog-close secondary",
+        onclick: function() {
+          sendGcode('$RST=*');
+          refreshGrblSettings()
+        }
+      },
+      {
+        caption: "Cancel",
+        cls: "js-dialog-close",
+        onclick: function() {
+          refreshGrblSettings();
+        }
+      }
+    ]
+  });
 }
