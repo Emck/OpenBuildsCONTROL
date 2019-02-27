@@ -10,6 +10,9 @@
    rm -rf /youproject/node_modules/@serialport
    cp -r node_modules/@serialport /youproject/node_modules/@serialport
 
+3. 彻底解决这个问题,就要等serialport包的releases什么时候出了 bindings node darwin-x64.tar.gz对应node版本的二进制包了
+   https://github.com/node-serialport/node-serialport/releases
+
 特别说明:
    解决Electron和nodemon的版本错误的方案是冲突的,那么只需要额外备份一套@serialport目录即可
    也就是当需要使用nodemon时,复制新项目的@serialport到当前项目中
